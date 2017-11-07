@@ -1,9 +1,9 @@
 #include <iostream>
 #include <math.h>
-#include "helpFunctions.h"
 #include "InvertJacobian.cpp"
 #include "TOCC.cpp"
 #include "PinHole.cpp"
+#include "ToccController.cpp"
 
 int main()
 {
@@ -27,7 +27,7 @@ int main()
 	float yt = 0;
 	float zt = 0;
 	float roll = 0;
-	float yaw = 0;
+	float yaw = 0.2;
 	float pitch = 0;
 	float cameraTransformation[6];
 	cameraTransformation[0] = xt;
@@ -82,17 +82,6 @@ int main()
 
 	//================================
 	//pinhole projection test
-	//================================
-	/*
-	   float x2d1 = (fx*xt + x0*zt + x3d*(fx*cos(yaw) - x0*sin(yaw)) + z3d*(fx*sin(yaw) + x0*cos(yaw)))/(zt + z3d*cos(yaw) - x3d*sin(yaw));
-
-	   float y2d1 = (fy*y3d + fy*yt + y0*zt + y0*z3d*cos(yaw) - x3d*y0*sin(yaw))/(zt + z3d*cos(yaw) - x3d*sin(yaw));
-
-	   float x2d2 = (fx*xt + x0*zt + x3d2*(fx*cos(yaw) - x0*sin(yaw)) + z3d2*(fx*sin(yaw) + x0*cos(yaw)))/(zt + z3d2*cos(yaw) - x3d2*sin(yaw));
-
-	   float y2d2 = (fy*y3d2 + fy*yt + y0*zt + y0*z3d2*cos(yaw) - x3d2*y0*sin(yaw))/(zt + z3d2*cos(yaw) - x3d2*sin(yaw));
-	 */
-
 
 	PinHole ph;
 	ph.setCameraModel(cameraModel);
@@ -150,7 +139,7 @@ int main()
 	//================================
 	//TOCC test
 	//================================
-
+/*
 	TOCC tocc;
 
 	tocc.setCameraModel(cameraModel);
@@ -161,41 +150,30 @@ int main()
 	tocc.setOnScreenTarget(onScreenTargets);
 
 
-/*
-		xm = (phOutput[0]+phOutput[2])/2.0f;
-		distX = phOutput[0]-phOutput[2];
-		float s1 = ((x3d-xt)*(x3d-xt) + (z3d - zt)*(z3d - zt))*K_size;
-		float s2 = ((x3d2-xt)*(x3d2-xt) + (z3d2 - zt)*(z3d2 - zt))*K_size;
-
-		distS = s1 - s2;
-*/
 
 
-		xm_v = 0.001f;
-		distX_v = 0;
-		distS_v = 0;
+	xm_v = 0.001f;
+	distX_v = 0;
+	distS_v = 0;
 
 
-		std::cout<<"initial : xm_v = "<<xm_v<<", distX_v = "<<distX_v<<", distS_v = "<<distS_v<<std::endl;
+	std::cout<<"initial : xm_v = "<<xm_v<<", distX_v = "<<distX_v<<", distS_v = "<<distS_v<<std::endl;
 
-		float controlInput[3];
-		controlInput[0] = xm_v;
-		controlInput[1] = distX_v;
-		controlInput[2] = distS_v;
+	float controlInput[3];
+	controlInput[0] = xm_v;
+	controlInput[1] = distX_v;
+	controlInput[2] = distS_v;
 
 
-	//	tocc.setControlInput(controlInput);
 
 	float controlOutput[3];
 
-	for(int i = 0; i<500; i++)
+	for(int i = 0; i<0; i++)
 	{
 
-		std::cout<<"======================\n i = "<<i<<std::endl;
 
 		tocc.spin(controlOutput);
-		//std::cout<<"controlOutput = "<<controlOutput[0]<<", "<<controlOutput[1]<<", "<<controlOutput[2]<<std::endl;
-
+		
 		//update
 		xt += controlOutput[0];
 		zt += controlOutput[1];
@@ -207,7 +185,7 @@ int main()
 		cameraTransformation[4] = yaw;
 		ph.setCameraTransformation(cameraTransformation);
 		tocc.setCameraTransformation(cameraTransformation);
-		
+
 		ph.compute();
 		ph.getResults(phOutput);
 		xm = (phOutput[0]+phOutput[2])/2.0f;
@@ -224,8 +202,46 @@ int main()
 		controlInput[0] = xm;
 		controlInput[1] = distX;
 		controlInput[2] = distS;
-		
+
 
 		tocc.setControlInput(controlInput);
 	}
+*/
+
+
+
+
+
+
+
+ToccController tc;
+tc.init();
+tc.setCameraTransformation(cameraTransformation);
+tc.set3DPoint1(point3D1);
+tc.set3DPoint2(point3D2);
+float target[3] = {300,20,10};
+tc.setControlTargets(target);
+float controlIn[3] = {29,2,3};
+tc.setControlInput(controlIn);
+float output[3];
+
+
+for(int i = 0; i < 100;i++){
+
+controlIn[0] = 29+i*0.05f;
+tc.setControlInput(controlIn);
+tc.set3DPoint1(point3D1);
+tc.set3DPoint2(point3D2);
+tc.setCameraTransformation(cameraTransformation);
+
+tc.spin(output);
+std::cout<<"output[0] = "<<output[0]<<std::endl;
+std::cout<<"output[1] = "<<output[1]<<std::endl;
+std::cout<<"output[2] = "<<output[2]<<std::endl;
+std::cout<<"========================"<<std::endl;
+cameraTransformation[0] = output[1];
+cameraTransformation[2] = output[2];
+cameraTransformation[4] = output[0];
+
+}
 }

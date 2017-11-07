@@ -1,6 +1,5 @@
 #include <iostream>
 #include <math.h>
-#include "helpFunctions.h"
 
 class PinHole
 {
