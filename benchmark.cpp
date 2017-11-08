@@ -2,6 +2,8 @@
 #include <math.h>
 #include "TOCC.h"
 #include "PinHole.cpp"
+#include "Circle.cpp"
+#include "Point2D.h"
 
 int main()
 {
@@ -119,7 +121,7 @@ float controlIn[3] = {29,2,3};
 tocc.setControlInput(controlIn);
 float output[3];
 
-
+/*
 for(int i = 0; i < 100;i++){
 
 controlIn[0] = 29+i*0.05f;
@@ -138,4 +140,29 @@ cameraTransformation[2] = output[2];
 cameraTransformation[4] = output[0];
 
 }
+
+*/
+
+
+
+
+//================ Circle test
+Point2D pp1;
+pp1.x = 0;
+pp1.y = 1;
+
+
+Point2D pp2;
+pp2.x = 1;
+pp2.y = 0;
+
+Circle c;
+c.r = 1;
+float out[4];
+c.getCenter(pp1,pp2,out);
+
+std::cout<<"out[0] = "<<out[0]<<std::endl;
+std::cout<<"out[1] = "<<out[1]<<std::endl;
+std::cout<<"out[2] = "<<out[2]<<std::endl;
+std::cout<<"out[3] = "<<out[3]<<std::endl;
 }
