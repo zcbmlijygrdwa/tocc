@@ -1,9 +1,7 @@
 #include <iostream>
 #include <math.h>
-#include "InvertJacobian.cpp"
-#include "TOCC.cpp"
+#include "TOCC.h"
 #include "PinHole.cpp"
-#include "ToccController.cpp"
 
 int main()
 {
@@ -102,38 +100,6 @@ int main()
 	std::cout<<"------------------------------------------"<<std::endl;
 
 
-	//================================
-	//Invert Jacobian test
-	//================================
-
-
-	std::cout<<"-----------------------------"<<std::endl;
-
-
-	InvertJacobian ij;
-
-	ij.setCameraModel(cameraModel);
-	ij.setCameraTransformation(cameraTransformation);
-	ij.set3DPoint1(point3D1);
-	ij.set3DPoint2(point3D2);
-	ij.setK_size(1.0f);
-
-	ij.compute();
-	float d[3];
-	ij.getResults(d);
-
-	std::cout<<"invert jacobian obtained!"<<std::endl;
-	std::cout<<"data1 = "<<d[0]<<std::endl;
-	std::cout<<"data2 = "<<d[1]<<std::endl;
-	std::cout<<"data3 = "<<d[2]<<std::endl;
-
-	std::cout<<"data4 = "<<d[3]<<std::endl;
-	std::cout<<"data5 = "<<d[4]<<std::endl;
-	std::cout<<"data6 = "<<d[5]<<std::endl;
-
-	std::cout<<"data7 = "<<d[6]<<std::endl;
-	std::cout<<"data8 = "<<d[7]<<std::endl;
-	std::cout<<"data9 = "<<d[8]<<std::endl;
 
 
 
@@ -142,27 +108,27 @@ int main()
 
 
 
-ToccController tc;
-tc.init();
-tc.setCameraTransformation(cameraTransformation);
-tc.set3DPoint1(point3D1);
-tc.set3DPoint2(point3D2);
+TOCC tocc;
+tocc.init();
+tocc.setCameraTransformation(cameraTransformation);
+tocc.set3DPoint1(point3D1);
+tocc.set3DPoint2(point3D2);
 float target[3] = {300,20,10};
-tc.setControlTargets(target);
+tocc.setControlTargets(target);
 float controlIn[3] = {29,2,3};
-tc.setControlInput(controlIn);
+tocc.setControlInput(controlIn);
 float output[3];
 
 
 for(int i = 0; i < 100;i++){
 
 controlIn[0] = 29+i*0.05f;
-tc.setControlInput(controlIn);
-tc.set3DPoint1(point3D1);
-tc.set3DPoint2(point3D2);
-tc.setCameraTransformation(cameraTransformation);
+tocc.setControlInput(controlIn);
+tocc.set3DPoint1(point3D1);
+tocc.set3DPoint2(point3D2);
+tocc.setCameraTransformation(cameraTransformation);
 
-tc.spin(output);
+tocc.spin(output);
 std::cout<<"output[0] = "<<output[0]<<std::endl;
 std::cout<<"output[1] = "<<output[1]<<std::endl;
 std::cout<<"output[2] = "<<output[2]<<std::endl;
