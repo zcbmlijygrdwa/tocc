@@ -6,7 +6,24 @@
 
   This controller is a single-input single-output controller.
 
-  Created on 2017/11/01 By Zhenyu Yang
+
+ Usage:
+ PID pid;
+ pid.init();	//initialization
+ pid.setTarget(10);	//set target value
+ pid.setPID(0.1,0.01,0.02);	//set P, I, and D parameters
+
+ ...
+ loop()
+ {
+
+ pid_output = pid.spin(pid_input);
+
+ }
+
+
+
+  Created on 2017/06/01 By Zhenyu Yang
   ================================== */
 
 
@@ -107,7 +124,6 @@ class PID{
 			errorPrev = 0;
 			error_d = 0;
 			error_i = 0;
-
 		}
 };
 
