@@ -19,7 +19,7 @@
 
 
 #include<iostream>
-#include "Circle.cpp"
+#include "toric/Circle.cpp"
 #include <cmath>
 #include "TOCC.h"
 void TOCC::init()

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <math.h>
 #include "TOCC.h"
-#include "PinHole.cpp"
-#include "Circle.cpp"
-#include "Point2D.h"
+#include "cameraProjection/PinHole.cpp"
+#include "toric/Circle.cpp"
+#include "struct/Point2D.h"
 
 int main()
 {
