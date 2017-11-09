@@ -236,6 +236,23 @@ std::cout<<"true center = ["<<0<<", "<<0<<"]"<<std::endl;
 std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
 
 
+//case 6
+std::cout<<"case 6:"<<std::endl;
+pp1.x = -0.137306;
+pp1.y = 2.882683;
+
+pp2.x = -1.914549;
+pp2.y = 3.478368;
+
+cam.x = -4;
+cam.y = -4;
+
+c.r = 10;
+c.getCenter(pp1,pp2,cam,out);
+std::cout<<"true center = ["<<0<<", "<<0<<"]"<<std::endl;
+std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
+
+
 
 //test for MA filter
 MAFilter maf;

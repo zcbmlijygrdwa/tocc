@@ -13,6 +13,53 @@
   [2] xt: The camera translation in x derection of the gloable coordinate.
   [3] zt: The camera translation in z derection of the gloable coordinate.
 
+  
+
+  Usage:
+
+  float cameraTransformation[6];
+  cameraTransformation[0] = xt;
+  cameraTransformation[1] = yt;
+  cameraTransformation[2] = zt;
+  cameraTransformation[3] = roll;
+  cameraTransformation[4] = yaw;
+  cameraTransformation[5] = pitch;
+
+  float controlIn[3] = {29,2,3};
+
+  float target[4] = {300,20,10,5};
+
+  float output[3];
+
+  TOCC tocc;
+  tocc.init();
+  tocc.setCameraTransformation(cameraTransformation);
+  tocc.set3DPoint1(point3D1);
+  tocc.set3DPoint2(point3D2);
+  tocc.setControlTargets(target);
+  tocc.setControlInput(controlIn);
+
+  for(int i = 0; i < 100;i++)
+  {
+  
+  controlIn[0] = 29+i*0.05f;
+  tocc.setControlInput(controlIn);
+  tocc.set3DPoint1(point3D1);
+  tocc.set3DPoint2(point3D2);
+  tocc.setCameraTransformation(cameraTransformation);
+  
+  tocc.spin(output);
+  std::cout<<"output[0] = "<<output[0]<<std::endl;
+  std::cout<<"output[1] = "<<output[1]<<std::endl;
+  std::cout<<"output[2] = "<<output[2]<<std::endl;
+  std::cout<<"========================"<<std::endl;
+  cameraTransformation[0] = output[1];
+  cameraTransformation[2] = output[2];
+  cameraTransformation[4] = output[0];
+  
+  }
+
+
   Created on 2017/11/01 By Zhenyu Yang
   ================================== */
 
@@ -142,11 +189,21 @@ void TOCC::getCircle(float r){
 	Point2D cam;
 	Circle c;
 
+	pp1.x = x3d;
+	pp1.y = z3d;
+
+	pp2.x = x3d1;
+	pp2.y = z3d1;
+
+	cam.x = xt;
+	cam.y = zt;
+
+	c.r = r;
 
 	float out[2];
 	c.getCenter(pp1,pp2,cam,out);
 	circle [0] = out[0];
-	circle [1] = out[0];
+	circle [1] = out[1];
 	circle [2] = r;
 
 }
