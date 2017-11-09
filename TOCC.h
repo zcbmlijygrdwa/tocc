@@ -86,7 +86,7 @@ class TOCC
 		PID pid_phi;	//control the phi angle in the toric circle
 
 		float circle[3];//the cirle on the toric parallel wiith the ground
-
+		float r;  //the radius of the toric circle
 
 	public:
 		void init();
@@ -97,6 +97,6 @@ class TOCC
 		void set3DPoint2(float data[]);
 		void setControlInput(float data[]);
 		void setControlTargets(float data[]);
-		void getCircle();
+		void getCircle(float r);
 };
 

@@ -115,13 +115,13 @@ tocc.init();
 tocc.setCameraTransformation(cameraTransformation);
 tocc.set3DPoint1(point3D1);
 tocc.set3DPoint2(point3D2);
-float target[3] = {300,20,10};
+float target[4] = {300,20,10,5};
 tocc.setControlTargets(target);
 float controlIn[3] = {29,2,3};
 tocc.setControlInput(controlIn);
 float output[3];
 
-/*
+
 for(int i = 0; i < 100;i++){
 
 controlIn[0] = 29+i*0.05f;
@@ -141,28 +141,97 @@ cameraTransformation[4] = output[0];
 
 }
 
-*/
+
 
 
 
 
 //================ Circle test
 Point2D pp1;
-pp1.x = 0;
+Point2D pp2;
+Point2D cam;
+Circle c;
+float out[2];
+
+//case 1
+std::cout<<"case 1:"<<std::endl;
+pp1.x = 1;
 pp1.y = 1;
 
-
-Point2D pp2;
 pp2.x = 1;
-pp2.y = 0;
+pp2.y = -1;
 
-Circle c;
+cam.x = -4;
+cam.y = 4;
+
+c.r = 1.414;
+c.getCenter(pp1,pp2,cam,out);
+std::cout<<"true center = ["<<0<<", "<<0<<"]"<<std::endl;
+std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
+
+
+//case 2
+std::cout<<"case 2:"<<std::endl;
+pp1.x = 1;
+pp1.y = 1;
+
+pp2.x = 1;
+pp2.y = -1;
+
+cam.x = 4;
+cam.y = 4;
+
+c.r = 1.414;
+c.getCenter(pp1,pp2,cam,out);
+std::cout<<"true center = ["<<2<<", "<<0<<"]"<<std::endl;
+std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
+
+//case 3
+std::cout<<"case 3:"<<std::endl;
+pp1.x = 1;
+pp1.y = 1;
+
+pp2.x = -1;
+pp2.y = 1;
+
+cam.x = -4;
+cam.y = 4;
+
+c.r = 1.414;
+c.getCenter(pp1,pp2,cam,out);
+std::cout<<"true center = ["<<0<<", "<<2<<"]"<<std::endl;
+std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
+
+//case 4
+std::cout<<"case 4:"<<std::endl;
+pp1.x = 1;
+pp1.y = 1;
+
+pp2.x = -1;
+pp2.y = 1;
+
+cam.x = -4;
+cam.y = -4;
+
+c.r = 1.414;
+c.getCenter(pp1,pp2,cam,out);
+std::cout<<"true center = ["<<0<<", "<<0<<"]"<<std::endl;
+std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
+
+//case 5
+std::cout<<"case 5:"<<std::endl;
+pp1.x = 1;
+pp1.y = 1;
+
+pp2.x = -1;
+pp2.y = 1;
+
+cam.x = -4;
+cam.y = -4;
+
 c.r = 1;
-float out[4];
-c.getCenter(pp1,pp2,out);
+c.getCenter(pp1,pp2,cam,out);
+std::cout<<"true center = ["<<0<<", "<<0<<"]"<<std::endl;
+std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
 
-std::cout<<"out[0] = "<<out[0]<<std::endl;
-std::cout<<"out[1] = "<<out[1]<<std::endl;
-std::cout<<"out[2] = "<<out[2]<<std::endl;
-std::cout<<"out[3] = "<<out[3]<<std::endl;
 }
