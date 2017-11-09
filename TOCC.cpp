@@ -20,6 +20,7 @@
 
 #include<iostream>
 #include "toric/Circle.cpp"
+#include "filters/MAFilter.cpp"
 #include <cmath>
 #include "TOCC.h"
 void TOCC::init()

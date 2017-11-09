@@ -4,6 +4,7 @@
 #include "cameraProjection/PinHole.cpp"
 #include "toric/Circle.cpp"
 #include "struct/Point2D.h"
+#include "filters/MAFilter.cpp"
 
 int main()
 {
@@ -233,5 +234,51 @@ c.r = 1;
 c.getCenter(pp1,pp2,cam,out);
 std::cout<<"true center = ["<<0<<", "<<0<<"]"<<std::endl;
 std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
+
+
+
+//test for MA filter
+MAFilter maf;
+maf.init();
+
+for(int i = 0;i<10;i++)
+{
+
+std::cout<<(i+1)<<"th round, putting 1 into MA filter, filter returns: "<<maf.put(1)<<std::endl;
+
+}
+
+
+std::cout<<"=========================================="<<std::endl;
+maf.reset();
+for(int i = 0;i<30;i++)
+{
+
+std::cout<<(i+1)<<"th round, putting 1 into MA filter, filter returns: "<<maf.put(1)<<std::endl;
+
+}
+
+
+std::cout<<"=========================================="<<std::endl;
+maf.reset();
+
+
+for(int i = 0;i<10;i++)
+{
+
+std::cout<<(i+1)<<"th round, putting "<<i<<" into MA filter, filter returns: "<<maf.put(i)<<std::endl;
+
+}
+
+
+std::cout<<"=========================================="<<std::endl;
+maf.reset();
+for(int i = 0;i<30;i++)
+{
+
+std::cout<<(i+1)<<"th round, putting "<<i<<" into MA filter, filter returns: "<<maf.put(i)<<std::endl;
+
+}
+
 
 }
