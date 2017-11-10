@@ -6,21 +6,34 @@
 
   This controller is a single-input single-output controller.
 
+  A PID controller is a proportional–integral–derivative controller (PID controller or three term controller) is a control loop feedback mechanism widely used in industrial control systems and a variety of other applications requiring continuously modulated control. 
 
- Usage:
- PID pid;
- pid.init();	//initialization
- pid.setTarget(10);	//set target value
- pid.setPID(0.1,0.01,0.02);	//set P, I, and D parameters
-
- ...
- loop()
- {
-
- pid_output = pid.spin(pid_input);
-
- }
-
+  Input:
+  inputIn: the input data to pid controller
+  
+  
+  Output:
+  output_to_plant: the output of the controller
+  
+  Parameters:
+  p = the proportional coeffient
+  i = the integral coeffient
+  d = the derivative coeffient
+ 
+  Usage:
+  PID pid;
+  pid.init();	//initialization
+  pid.setTarget(10);	//set target value
+  pid.setPID(0.1,0.01,0.02);	//set P, I, and D parameters
+ 
+  ...
+  loop()
+  {
+ 
+  pid_output = pid.spin(pid_input);
+ 
+  }
+ 
 
 
   Created on 2017/06/01 By Zhenyu Yang
