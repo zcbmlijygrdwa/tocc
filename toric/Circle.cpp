@@ -4,6 +4,20 @@ This class computes the centers of circles that have a given radius and pass two
 
 The class will return the circle center point that is closer to a point representing location of a camera.
 
+Inputs:
+
+pp1: the coordinate of the first point
+pp2: the coordinate of the second point
+cam: the coordinate of the camera
+
+Outputs:
+center: the center of the cirlc
+
+Parameters:
+r: the radius of the circle, r = 10 by default
+
+
+
 Usage:
 
 Point2D pp1;
@@ -20,7 +34,7 @@ pp2.y = 2;
 cam.x = 3;
 cam.y = 4;
 
-c.r = 15;  //specify the radius of the toric circle.
+c.r = 15;  //specify the radius of the circle.
 
 float center[2];
 c.getCenter(pp1,pp2,cam,out);
@@ -48,6 +62,11 @@ class Circle
 
 
 	public:
+
+		void init()
+		{
+		r = 10;
+		}
 		float dist2D(Point2D n, Point2D m)
 		{
 
