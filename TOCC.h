@@ -98,5 +98,6 @@ class TOCC
 		void setControlInput(float data[]);
 		void setControlTargets(float data[]);
 		void getCircle(float r);
+		void reset();
 };
 

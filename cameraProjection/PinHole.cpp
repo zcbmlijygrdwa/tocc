@@ -1,7 +1,7 @@
 /*============================
-This class computes projection of two 3D points into 2D space throught poin hole camera projection model. The focal length in X and Y directions needs to be specified. The offsets of 2D projection in X and Y direction (X0 and Y0) are set to zeros by default.
+  This class computes projection of two 3D points into 2D space throught poin hole camera projection model. The focal length in X and Y directions needs to be specified. The offsets of 2D projection in X and Y direction (X0 and Y0) are set to zeros by default.
 
-The class take two 3D points coordinates and the tranforamtion(translation + rotation) of the camera as the input, and returns two 2D points as the output.
+  The class take two 3D points coordinates and the tranforamtion(translation + rotation) of the camera as the input, and returns two 2D points as the output.
 
 Inputs:
 xt:	The x component in camera translation
@@ -69,6 +69,11 @@ float phOutput[4];
 ph.getResults(phOutput);
 
 
+
+
+ph.reset(); reset the pin hole projector
+
+
 Created by Zhenyu Yang on 2017/10/23
 
 ==============================================*/
@@ -129,7 +134,6 @@ class PinHole
 			yaw = 0;
 			pitch = 0;
 
-
 			//default inputs for 2 3D points
 			x3d = -55;
 			y3d = 0;
@@ -138,7 +142,7 @@ class PinHole
 			y3d2 = 0;
 			z3d2 = 10;
 
-			 		}
+		}
 
 		//sets
 		void setCameraModel(float model[])
@@ -235,8 +239,34 @@ class PinHole
 			y2d2 = (fy*y3d2 + fy*yt + y0*zt + y0*z3d2*cos(yaw) - x3d2*y0*sin(yaw))/(zt + z3d2*cos(yaw) - x3d2*sin(yaw));
 
 
-//			std::cout<<"Computing pinhole done!"<<std::endl;
+			//			std::cout<<"Computing pinhole done!"<<std::endl;
 		}
 
+		void reset()
+		{
+
+			//default inputs for camera model
+			x0 = 0;
+			y0 = 0;
+			fx = 500;
+			fy = fx;
+			//default inputs for camera translationi
+			xt = 0;
+			yt = 0;
+			zt = 0;
+			roll = 0;
+			yaw = 0;
+			pitch = 0;
+
+			//default inputs for 2 3D points
+			x3d = -55;
+			y3d = 0;
+			z3d = 10;
+			x3d2 = 5;
+			y3d2 = 0;
+			z3d2 = 10;
+
+
+		}
 
 };

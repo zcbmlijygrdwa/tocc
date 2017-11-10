@@ -1,7 +1,7 @@
 /*============================
-This class is an implementation of a moving average filter. This is a single-input and single-output filter.
+  This class is an implementation of a moving average filter. This is a single-input and single-output filter.
 
-The class take the raw data as the input, and returns the filtered data as the output.
+  The class take the raw data as the input, and returns the filtered data as the output.
 
 Input:
 dataIn: raw data input
@@ -83,7 +83,7 @@ class MAFilter
 				filteredData =  sum/totalSize;
 			}
 
-		return filteredData;
+			return filteredData;
 
 		}
 

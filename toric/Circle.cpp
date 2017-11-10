@@ -1,8 +1,8 @@
 
 /*============================
-This class computes the centers of circles that have a given radius and pass two given points.
+  This class computes the centers of circles that have a given radius and pass two given points.
 
-The class will return the circle center point that is closer to a point representing location of a camera.
+  The class will return the circle center point that is closer to a point representing location of a camera.
 
 Inputs:
 
@@ -42,6 +42,9 @@ c.getCenter(pp1,pp2,cam,out);
 float center_x = out[0];
 float center_y = out[1];
 
+
+c.reset(); //reset the circle generator
+
 Created by Zhenyu Yang on 2017/11/03
 
 ==============================================*/
@@ -58,14 +61,14 @@ class Circle
 		float r;
 		Point2D center1;
 		Point2D center2;
-		
+
 
 
 	public:
 
 		void init()
 		{
-		r = 10;
+			r = 10;
 		}
 		float dist2D(Point2D n, Point2D m)
 		{
@@ -75,34 +78,34 @@ class Circle
 		}
 
 		void getCenter(Point2D p1, Point2D p2, Point2D camera, float *center)
-{
-			
-		if(dist2D(p1,p2)>=2*r)
-{
-			
+		{
+
+			if(dist2D(p1,p2)>=2*r)
+			{
+
 				std::cout<<"radius =  "<<r<<", dist = "<<dist2D(p1,p2)<<std::endl;	
 				std::cout<<"radius too small, cannot build any circle! "<<std::endl;	
-			center[0] = 0;
-			center[1] = 0;
-			return;
-}
-		//float centers[2];
-		getRawCenters(p1,p2);
-		float distance1 = dist2D(center1,camera);
-		float distance2 = dist2D(center2,camera);
-		if(distance1<=distance2)
-		{
-			center[0] = center1.x;
-			center[1] = center1.y;
+				center[0] = 0;
+				center[1] = 0;
+				return;
+			}
+			//float centers[2];
+			getRawCenters(p1,p2);
+			float distance1 = dist2D(center1,camera);
+			float distance2 = dist2D(center2,camera);
+			if(distance1<=distance2)
+			{
+				center[0] = center1.x;
+				center[1] = center1.y;
+			}
+			else{
+
+				center[0] = center2.x;
+				center[1] = center2.y;
+
+			}
+
 		}
-		else{
-
-			center[0] = center2.x;
-			center[1] = center2.y;
-
-		}
-
-}
 
 		void getRawCenters(Point2D p1, Point2D p2)
 		{
@@ -119,7 +122,7 @@ class Circle
 
 			center2.x = 0;
 			center2.y = 0;
-			
+
 			float x_middle = (p1.x+p2.x)/2.0f;
 			float y_middle = (p1.y+p2.y)/2.0f;
 
@@ -145,7 +148,7 @@ class Circle
 
 				x_center2 = x_middle-delta_x;
 				y_center2 = y_middle-delta_y;
-				
+
 				center1.x = x_middle+delta_x;
 				center1.y = y_middle+delta_y;
 
@@ -161,7 +164,7 @@ class Circle
 
 				center1.y = (p2.y+p1.y)/2.0f;
 				center2.y = y_center1;	
-				
+
 				float d = dist2D(p1,p2);
 				std::cout<<"d = "<<d<<"\n";
 				float theta = acos((d/2)/r);
@@ -200,8 +203,15 @@ class Circle
 			}
 
 			else
-{
+			{
 				std::cout<<"Cicle: Unkown state."<<std::endl;
 			}
 		}
+
+
+		void reset()
+		{
+			r = 10;
+		}
+
 };
