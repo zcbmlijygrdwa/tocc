@@ -31,97 +31,82 @@ maf.reset(); //reset the filter
 Created by Zhenyu Yang on 2017/10/25
 
 ==============================================*/
+#include "MAFilter.h"
 
+void MAFilter::init()
+{
+	bufferedSize = 0;
+	totalSize = 10;
+	ifBufferFull = false;
+	sum = 0;
+}
 
-class MAFilter
+float MAFilter::put(float dataIn)
 {
 
-	public:
-		float buffer[10];
-		int bufferedSize;
-		int totalSize;
-		bool ifBufferFull;
-		float sum;
-		float filteredData;
+	if(bufferedSize<totalSize)
+	{
+		buffer[bufferedSize] = dataIn;
+		bufferedSize++;
+	}
+	else
+	{
+		ifBufferFull = true;
+		bufferedSize = 0;
+		buffer[bufferedSize] = dataIn;
+		bufferedSize++;
+	}
 
-	public:
+	getSum();
 
-		void init()
+	if(!ifBufferFull)
+	{
+		filteredData =  sum/bufferedSize;
+
+	}
+	else
+	{
+
+		filteredData =  sum/totalSize;
+	}
+
+	return filteredData;
+
+}
+
+
+
+void MAFilter::getSum()
+{
+	sum = 0;
+
+	if(!ifBufferFull)
+	{
+		for(int i = 0 ;i<bufferedSize;i++)
 		{
-			bufferedSize = 0;
-			totalSize = 10;
-			ifBufferFull = false;
-			sum = 0;
+			sum+=buffer[i];
 		}
 
-		float put(float dataIn)
+	}
+
+	else
+	{
+
+		for(int i = 0 ;i<totalSize;i++)
 		{
-
-			if(bufferedSize<totalSize)
-			{
-				buffer[bufferedSize] = dataIn;
-				bufferedSize++;
-			}
-			else
-			{
-				ifBufferFull = true;
-				bufferedSize = 0;
-				buffer[bufferedSize] = dataIn;
-				bufferedSize++;
-			}
-
-			getSum();
-
-			if(!ifBufferFull)
-			{
-				filteredData =  sum/bufferedSize;
-
-			}
-			else
-			{
-
-				filteredData =  sum/totalSize;
-			}
-
-			return filteredData;
-
+			sum+=buffer[i];
 		}
+	}
+}
 
+void MAFilter::reset()
+{
+	ifBufferFull = false;
+	bufferedSize = 0;
 
+	for(int i = 0 ;i<totalSize;i++)
+	{
+		buffer[i] = 0;
+	}
 
-		void getSum()
-		{
-			sum = 0;
-
-			if(!ifBufferFull)
-			{
-				for(int i = 0 ;i<bufferedSize;i++)
-				{
-					sum+=buffer[i];
-				}
-
-			}
-
-			else
-			{
-
-				for(int i = 0 ;i<totalSize;i++)
-				{
-					sum+=buffer[i];
-				}
-			}
-		}
-
-		void reset()
-		{
-			ifBufferFull = false;
-			bufferedSize = 0;
-
-			for(int i = 0 ;i<totalSize;i++)
-			{
-				buffer[i] = 0;
-			}
-
-		}
-
-};
+}

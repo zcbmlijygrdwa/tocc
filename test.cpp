@@ -4,7 +4,7 @@
 #include "cameraProjection/PinHole.cpp"
 #include "toric/Circle.cpp"
 #include "struct/Point2D.h"
-#include "filters/MAFilter.cpp"
+#include "filters/MAFilter.h"
 
 int main()
 {
