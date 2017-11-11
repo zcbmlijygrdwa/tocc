@@ -51,45 +51,26 @@ Created by Zhenyu Yang on 2017/11/03
 
 #include <cmath>
 #include "../struct/Point2D.h"
+#include "Circle.h"
 #include <iostream>
-
-
-class Circle
-{
-
-	public: 
-		float r;
-		Point2D center1;
-		Point2D center2;
-
-
-
-	public:
-
-		void init()
+		void Circle::init()
 		{
 			r = 10;
 		}
-		float dist2D(Point2D n, Point2D m)
+		float Circle::dist2D(Point2D n, Point2D m)
 		{
-
 			return sqrt( (n.x-m.x)*(n.x-m.x)  + (n.y - m.y)*(n.y  -m.y)  );
-
 		}
 
-		void getCenter(Point2D p1, Point2D p2, Point2D camera, float *center)
+		void Circle::getCenter(Point2D p1, Point2D p2, Point2D camera, float *center)
 		{
 
 			if(dist2D(p1,p2)>=2*r)
 			{
-
-				std::cout<<"radius =  "<<r<<", dist = "<<dist2D(p1,p2)<<std::endl;	
-				std::cout<<"radius too small, cannot build any circle! "<<std::endl;	
 				center[0] = 0;
 				center[1] = 0;
 				return;
 			}
-			//float centers[2];
 			getRawCenters(p1,p2);
 			float distance1 = dist2D(center1,camera);
 			float distance2 = dist2D(center2,camera);
@@ -102,20 +83,16 @@ class Circle
 
 				center[0] = center2.x;
 				center[1] = center2.y;
-
 			}
 
 		}
 
-		void getRawCenters(Point2D p1, Point2D p2)
+		void Circle::getRawCenters(Point2D p1, Point2D p2)
 		{
-
-
 			float x_center1 = 0;
 			float y_center1 = 0;
 			float x_center2 = 0;
 			float y_center2 = 0;
-
 
 			center1.x = 0;
 			center1.y = 0;
@@ -127,18 +104,12 @@ class Circle
 			float y_middle = (p1.y+p2.y)/2.0f;
 
 			if((p2.x-p1.x)!=0&&(p2.y-p1.y!=0)){
-
 				float k = (p2.y-p1.y)/(p2.x-p1.x);
-				std::cout<<"k = "<<k<<"\n";	
 				float K_middle_to_center = -1/k;
 
-				std::cout<<"K_middle_to_center = "<<K_middle_to_center<<"\n";	
 				float d = dist2D(p1,p2); 
-				std::cout<<"d = "<<d<<"\n";	
 				float theta = acos((d/2)/r);
-				std::cout<<"theta = "<<theta<<"\n";	
 				float d_middle_to_center = r*sin(theta);
-				std::cout<<"d_middle_to_center = "<<d_middle_to_center<<"\n";	
 
 				float beta = atan(K_middle_to_center);
 				float delta_x = d_middle_to_center*cos(beta);
@@ -166,11 +137,8 @@ class Circle
 				center2.y = y_center1;	
 
 				float d = dist2D(p1,p2);
-				std::cout<<"d = "<<d<<"\n";
 				float theta = acos((d/2)/r);
-				std::cout<<"theta = "<<theta<<"\n";
 				float d_middle_to_center = r*sin(theta);
-				std::cout<<"d_middle_to_center = "<<d_middle_to_center<<"\n";
 				x_center1 = x_middle + d_middle_to_center;
 				x_center2 = x_middle - d_middle_to_center;
 
@@ -190,11 +158,8 @@ class Circle
 				center2.x = y_center1;	
 
 				float d = dist2D(p1,p2);
-				std::cout<<"d = "<<d<<"\n";
 				float theta = acos((d/2)/r);
-				std::cout<<"theta = "<<theta<<"\n";
 				float d_middle_to_center = r*sin(theta);
-				std::cout<<"d_middle_to_center = "<<d_middle_to_center<<"\n";
 
 				center1.y = y_middle + d_middle_to_center;
 				center2.y = y_middle - d_middle_to_center;
@@ -209,9 +174,7 @@ class Circle
 		}
 
 
-		void reset()
+		void Circle::reset()
 		{
 			r = 10;
 		}
-
-};

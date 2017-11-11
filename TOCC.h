@@ -17,6 +17,7 @@
 
 #include<iostream>
 #include "basicController/PID.h"
+#include "toric/Circle.h"
 #include <cmath>
 
 class TOCC

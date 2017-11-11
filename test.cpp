@@ -2,7 +2,7 @@
 #include <math.h>
 #include "TOCC.h"
 #include "cameraProjection/PinHole.h"
-#include "toric/Circle.cpp"
+#include "toric/Circle.h"
 #include "struct/Point2D.h"
 #include "filters/MAFilter.h"
 

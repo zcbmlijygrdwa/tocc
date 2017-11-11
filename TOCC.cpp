@@ -69,7 +69,6 @@ Created on 2017/11/01 By Zhenyu Yang
 
 
 #include<iostream>
-#include "toric/Circle.cpp"
 #include <cmath>
 #include "TOCC.h"
 void TOCC::init()
