@@ -18,6 +18,7 @@
 #include<iostream>
 #include "basicController/PID.h"
 #include "toric/Circle.h"
+#include "filters/MAFilter.h"
 #include <cmath>
 
 class TOCC
@@ -88,6 +89,22 @@ class TOCC
 
 		float circle[3];//the cirle on the toric parallel wiith the ground
 		float r;  //the radius of the toric circle
+
+
+		//===================================
+		//      MA filters
+		//===================================
+
+		MAFilter maf_xm;
+		MAFilter maf_distX;
+		MAFilter maf_distS;
+		
+		MAFilter maf_xt;
+		MAFilter maf_zt;
+		MAFilter maf_x3d;
+		MAFilter maf_z3d;
+		MAFilter maf_x3d2;
+		MAFilter maf_z3d2;
 
 	public:
 		void init();

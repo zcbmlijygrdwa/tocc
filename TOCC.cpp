@@ -39,29 +39,25 @@ tocc.set3DPoint2(point3D2);
 tocc.setControlTargets(target);
 tocc.setControlInput(controlIn);
 
-for(int i = 0; i < 100;i++)
-{
 
-controlIn[0] = 29+i*0.05f;
+realTimeLoop{
+
+..........
 tocc.setControlInput(controlIn);
 tocc.set3DPoint1(point3D1);
 tocc.set3DPoint2(point3D2);
 tocc.setCameraTransformation(cameraTransformation);
 
 tocc.spin(output);
-std::cout<<"output[0] = "<<output[0]<<std::endl;
-std::cout<<"output[1] = "<<output[1]<<std::endl;
-std::cout<<"output[2] = "<<output[2]<<std::endl;
-std::cout<<"========================"<<std::endl;
 cameraTransformation[0] = output[1];
 cameraTransformation[2] = output[2];
 cameraTransformation[4] = output[0];
+......................
 
-
-tocc.reset(); //reset the tocc
 
 }
 
+tocc.reset(); //reset the tocc
 
 Created on 2017/11/01 By Zhenyu Yang
 ================================== */
@@ -81,6 +77,19 @@ void TOCC::init()
 	pid_yaw.setPID(0.01,0,0);
 	pid_phi.init();
 	pid_phi.setPID(0.01,0,0);
+	
+	//MA filters initialization
+		maf_xm.init();
+                maf_distX.init();
+                maf_distS.init();
+
+                maf_xt.init();
+                maf_zt.init();
+                maf_x3d.init();
+                maf_z3d.init();
+                maf_x3d2.init();
+                maf_z3d2.init();
+
 }
 
 
@@ -104,23 +113,23 @@ void TOCC::spin(float *controlOutput)
 
 void TOCC::setCameraTransformation(float data[])
 {
-	xt = data[0];
-	yt =  data[1];
-	zt =  data[2];
-	roll =  data[3];
-	yaw =  data[4];
-	pitch =  data[5];
+	xt = maf_xt.put(data[0]);
+	yt =  (data[1]);
+	zt =  maf_zt.put(data[2]);
+	roll =  (data[3]);
+	yaw =  (data[4]);
+	pitch =  (data[5]);
 }
 
 void TOCC::set3DPoints(float data[])
 {
-	x3d = data[0];
-	y3d = data[1];
-	z3d = data[2];
+	x3d = maf_xt.put(data[0]);
+	y3d = (data[1]);
+	z3d = maf_z3d.put(data[2]);
 
-	x3d1 = data[3];
-	y3d1 = data[4];
-	z3d1 = data[5];
+	x3d1 = maf_x3d.put(data[3]);
+	y3d1 = (data[4]);
+	z3d1 = maf_z3d.put(data[5]);
 
 }
 
@@ -140,9 +149,9 @@ void TOCC::set3DPoint2(float data[])
 
 void TOCC::setControlInput(float data[])
 {
-	xm = data[0];
-	distX = data[1];
-	distS = data[2];
+	xm = maf_xm.put(data[0]);
+	distX = maf_distX.put(data[1]);
+	distS = maf_distS.put(data[2]);
 }
 
 void TOCC::setControlTargets(float data[])

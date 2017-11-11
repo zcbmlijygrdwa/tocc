@@ -1,3 +1,6 @@
+
+// g++ -o test test.cpp TOCC.cpp basicController/PID.cpp filters/MAFilter.cpp cameraProjection/PinHole.cpp toric/Circle.cpp
+
 #include <iostream>
 #include <math.h>
 #include "TOCC.h"

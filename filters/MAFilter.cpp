@@ -21,7 +21,7 @@ maf.init();
 realTimeLoop
 {
 ....
-filteredData = maf.spin(rawData);
+filteredData = maf.put(rawData);
 ...
 }
 
