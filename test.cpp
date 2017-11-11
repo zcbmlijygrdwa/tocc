@@ -110,7 +110,6 @@ int main()
 
 
 //TOCC test
-/*
 TOCC tocc;
 tocc.init();
 tocc.setCameraTransformation(cameraTransformation);
@@ -142,7 +141,6 @@ cameraTransformation[4] = output[0];
 
 }
 
-*/
 
 
 
