@@ -1,4 +1,4 @@
-/*============================
+/*===========================
   This class computes projection of two 3D points into 2D space throught poin hole camera projection model. The focal length in X and Y directions needs to be specified. The offsets of 2D projection in X and Y direction (X0 and Y0) are set to zeros by default.
 
   The class take two 3D points coordinates and the tranforamtion(translation + rotation) of the camera as the input, and returns two 2D points as the output.
@@ -79,45 +79,9 @@ Created by Zhenyu Yang on 2017/10/23
 ==============================================*/
 
 
-
-#include <iostream>
+#include "PinHole.h"
 #include <math.h>
-
-class PinHole
-{
-
-	public:
-		//inputs for camera model
-		float x0;
-		float y0;
-		float fx;
-		float fy;
-
-		//inputs for camera translationi
-		float xt;
-		float yt;
-		float zt;
-		float roll;
-		float yaw;
-		float pitch;
-
-		//inputs for 2 3D points
-		float x3d;
-		float y3d;
-		float z3d;
-		float x3d2;
-		float y3d2;
-		float z3d2;
-
-		//2D points
-		float x2d1;
-		float y2d1;
-		float x2d2;
-		float y2d2;
-
-	public:
-
-		void init()
+		void PinHole::init()
 		{
 
 
@@ -145,7 +109,7 @@ class PinHole
 		}
 
 		//sets
-		void setCameraModel(float model[])
+		void PinHole::setCameraModel(float model[])
 		{
 			x0 = model[0];
 			y0 = model[1];
@@ -153,36 +117,36 @@ class PinHole
 			fy = model[3];
 		}
 
-		void setCameraModel_x0(float data)
+		void PinHole::setCameraModel_x0(float data)
 		{
 			x0 = data;
 		}
 
-		void setCameraModel_y0(float data)
+		void PinHole::setCameraModel_y0(float data)
 		{
 			y0 = data;
 		}
 
-		void setCameraModel_fx(float data)
+		void PinHole::setCameraModel_fx(float data)
 		{
 			fx = data;
 		}
 
-		void setCameraModel_fy(float data)
+		void PinHole::setCameraModel_fy(float data)
 		{
 			fy = data;
 		}
 
 
 
-		void set3DPoint1(float x, float y, float z)
+		void PinHole::set3DPoint1(float x, float y, float z)
 		{
 			x3d = x;
 			y3d = y;
 			z3d =z;
 		}
 
-		void set3DPoint2(float x, float y, float z)
+		void PinHole::set3DPoint2(float x, float y, float z)
 		{
 			x3d2 = x;
 			y3d2 = y;
@@ -190,14 +154,14 @@ class PinHole
 		}
 
 
-		void set3DPoint1(float data[])
+		void PinHole::set3DPoint1(float data[])
 		{
 			x3d = data[0];
 			y3d = data[1];
 			z3d = data[2];
 		}
 
-		void set3DPoint2(float data[])
+		void PinHole::set3DPoint2(float data[])
 		{
 			x3d2 = data[0];
 			y3d2 = data[1];
@@ -205,7 +169,7 @@ class PinHole
 		}
 
 
-		void setCameraTransformation(float data[])
+		void PinHole::setCameraTransformation(float data[])
 		{
 			xt = data[0];
 			yt =  data[1];
@@ -217,7 +181,7 @@ class PinHole
 
 		}
 
-		void getResults(float *data)
+		void PinHole::getResults(float *data)
 		{
 			data[0] = x2d1;
 			data[1] = y2d1;
@@ -228,7 +192,7 @@ class PinHole
 
 
 
-		void compute()
+		void PinHole::compute()
 		{
 			x2d1 = (fx*xt + x0*zt + x3d*(fx*cos(yaw) - x0*sin(yaw)) + z3d*(fx*sin(yaw) + x0*cos(yaw)))/(zt + z3d*cos(yaw) - x3d*sin(yaw));
 
@@ -237,12 +201,9 @@ class PinHole
 			x2d2 = (fx*xt + x0*zt + x3d2*(fx*cos(yaw) - x0*sin(yaw)) + z3d2*(fx*sin(yaw) + x0*cos(yaw)))/(zt + z3d2*cos(yaw) - x3d2*sin(yaw));
 
 			y2d2 = (fy*y3d2 + fy*yt + y0*zt + y0*z3d2*cos(yaw) - x3d2*y0*sin(yaw))/(zt + z3d2*cos(yaw) - x3d2*sin(yaw));
-
-
-			//			std::cout<<"Computing pinhole done!"<<std::endl;
 		}
 
-		void reset()
+		void PinHole::reset()
 		{
 
 			//default inputs for camera model
@@ -266,7 +227,4 @@ class PinHole
 			y3d2 = 0;
 			z3d2 = 10;
 
-
 		}
-
-};
