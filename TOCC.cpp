@@ -17,6 +17,17 @@
 
 Usage:
 
+float cameraModel[7];
+cameraModel[0] = x0;
+cameraModel[1] = y0;
+cameraModel[2] = fx;
+cameraModel[3] = fy;
+cameraModel[4] = fov;
+cameraModel[5] = resWidth;
+cameraModel[6] = resHeight;
+
+
+
 float cameraTransformation[6];
 cameraTransformation[0] = xt;
 cameraTransformation[1] = yt;
@@ -33,6 +44,7 @@ float output[3];
 
 TOCC tocc;
 tocc.init();
+tocc.setCameraModel(cameraModel);
 tocc.setCameraTransformation(cameraTransformation);
 tocc.set3DPoint1(point3D1);
 tocc.set3DPoint2(point3D2);
@@ -67,6 +79,10 @@ Created on 2017/11/01 By Zhenyu Yang
 #include<iostream>
 #include <cmath>
 #include "TOCC.h"
+
+#include "trajectory/TrajectoryPlanning.cpp"
+
+TrajectoryPlanning tp;
 void TOCC::init()
 {
 	PI =  3.141592653f;  //define pi
@@ -77,19 +93,20 @@ void TOCC::init()
 	pid_yaw.setPID(0.01,0,0);
 	pid_phi.init();
 	pid_phi.setPID(0.01,0,0);
-	
+
 	//MA filters initialization
-		maf_xm.init();
-                maf_distX.init();
-                maf_distS.init();
+	maf_xm.init();
+	maf_distX.init();
+	maf_distS.init();
 
-                maf_xt.init();
-                maf_zt.init();
-                maf_x3d.init();
-                maf_z3d.init();
-                maf_x3d2.init();
-                maf_z3d2.init();
-
+	maf_xt.init();
+	maf_zt.init();
+	maf_x3d.init();
+	maf_z3d.init();
+	maf_x3d2.init();
+	maf_z3d2.init();
+	//trajectory planning initialization
+	tp.init();
 }
 
 
@@ -111,6 +128,18 @@ void TOCC::spin(float *controlOutput)
 	controlOutput[2] = xt;
 }
 
+
+void TOCC::setCameraModel(float model[])
+{
+	fov = model[4];
+	resWidth = model[5];        	
+	std::cout<<"model[5] = "<<model[5]<<std::endl;	
+	tp.setScreenWidth(resWidth);
+	tp.setFov(fov);
+}
+
+
+
 void TOCC::setCameraTransformation(float data[])
 {
 	xt = maf_xt.put(data[0]);
@@ -119,6 +148,8 @@ void TOCC::setCameraTransformation(float data[])
 	roll =  (data[3]);
 	yaw =  (data[4]);
 	pitch =  (data[5]);
+
+	tp.setCameraTransformation(data);
 }
 
 void TOCC::set3DPoints(float data[])
@@ -131,6 +162,7 @@ void TOCC::set3DPoints(float data[])
 	y3d1 = (data[4]);
 	z3d1 = maf_z3d.put(data[5]);
 
+	tp.set3DPoints(data);
 }
 
 void TOCC::set3DPoint1(float data[])
@@ -138,6 +170,8 @@ void TOCC::set3DPoint1(float data[])
 	x3d = data[0];
 	y3d = data[1];
 	z3d = data[2];
+
+	tp.set3DPoint1(data);
 }
 
 void TOCC::set3DPoint2(float data[])
@@ -145,6 +179,8 @@ void TOCC::set3DPoint2(float data[])
 	x3d1 = data[0];
 	y3d1 = data[1];
 	z3d1 = data[2];
+
+	tp.set3DPoint2(data);
 }
 
 void TOCC::setControlInput(float data[])
@@ -163,6 +199,8 @@ void TOCC::setControlTargets(float data[])
 
 	pid_yaw.setTarget(xm_target);
 	pid_phi.setTarget(distS_target);
+
+	tp.setDistXTarget(distX_target);
 }
 
 
@@ -194,6 +232,10 @@ void TOCC::getCircle(float r){
 	circle [1] = center_y;
 	circle [2] = r;
 	 */
+
+	r =tp.getWayPoint();
+
+	std::cout<<"RR = "<<r<<std::endl;
 	Point2D pp1;
 	Point2D pp2;
 	Point2D cam;
@@ -222,13 +264,13 @@ void TOCC::getCircle(float r){
 
 
 
-	void TOCC::reset()
-	{
+void TOCC::reset()
+{
 
-		//PID controllers initialization
-		pid_yaw.reset();
-		pid_phi.reset();
+	//PID controllers initialization
+	pid_yaw.reset();
+	pid_phi.reset();
 
 
-	}
+}
 

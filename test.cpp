@@ -19,11 +19,17 @@ int main()
 	float y0 = 0;
 	float fx = 50.0f/1000;
 	float fy = fx;
-	float cameraModel[4];
+	float cameraModel[7];
+	float fov = (60/180.0f)*3.14;
+	float resWidth = 500;
+	float resHeight  = 800;
 	cameraModel[0] = x0;
 	cameraModel[1] = y0;
 	cameraModel[2] = fx;
 	cameraModel[3] = fy;
+	cameraModel[4] = fov;
+	cameraModel[5] = resWidth;
+	cameraModel[6] = resHeight;
 
 	float K_size = 1.0f;
 	//inputs for camera translationi
@@ -115,6 +121,8 @@ int main()
 //TOCC test
 TOCC tocc;
 tocc.init();
+
+tocc.setCameraModel(cameraModel);
 tocc.setCameraTransformation(cameraTransformation);
 tocc.set3DPoint1(point3D1);
 tocc.set3DPoint2(point3D2);
@@ -125,7 +133,7 @@ tocc.setControlInput(controlIn);
 float output[3];
 
 
-for(int i = 0; i < 100;i++){
+for(int i = 0; i < 10;i++){
 
 controlIn[0] = 29+i*0.05f;
 tocc.setControlInput(controlIn);
