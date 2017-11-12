@@ -80,6 +80,7 @@ Created on 2017/11/01 By Zhenyu Yang
 #include "basicController/PID.h"
 #include "toric/Circle.h"
 #include "filters/MAFilter.h"
+#include "trajectory/TrajectoryPlanning.h"
 #include <cmath>
 
 class TOCC

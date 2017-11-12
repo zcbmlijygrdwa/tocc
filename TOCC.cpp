@@ -80,8 +80,6 @@ Created on 2017/11/01 By Zhenyu Yang
 #include <cmath>
 #include "TOCC.h"
 
-#include "trajectory/TrajectoryPlanning.cpp"
-
 TrajectoryPlanning tp;
 void TOCC::init()
 {
@@ -120,12 +118,14 @@ void TOCC::spin(float *controlOutput)
 
 	getCircle(r);
 	float phi = pid_phi.spin (distS);
-	phi -=0.3f;
-	float r = circle[2];
-	xt = r*cos(phi)+circle[0];
-	zt = r*sin(phi)+circle[1];	
-	controlOutput[1] = zt;
-	controlOutput[2] = xt;
+	//phi -=0.3f;  //offset
+	//float r = circle[2];
+	//xt = r*cos(phi)+circle[0];
+	//zt = r*sin(phi)+circle[1];
+	float wapPoint[2];
+	tp.getWayPoint(phi,circle,wapPoint);	
+	controlOutput[1] = wapPoint[0];
+	controlOutput[2] = wapPoint[1];
 }
 
 
@@ -233,9 +233,9 @@ void TOCC::getCircle(float r){
 	circle [2] = r;
 	 */
 
-	r =tp.getWayPoint();
+	//r =tp.getWayPoint();
 
-	std::cout<<"RR = "<<r<<std::endl;
+	//std::cout<<"RR = "<<r<<std::endl;
 	Point2D pp1;
 	Point2D pp2;
 	Point2D cam;

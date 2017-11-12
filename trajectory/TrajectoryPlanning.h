@@ -1,3 +1,6 @@
+#ifndef TrajectoryPlanning_H
+#define TrajectoryPlanning_H
+
 /*===================================
   This is class for computation of trajectory planning.
   
@@ -74,90 +77,38 @@ tp.reset(); //reset the tocc
 Created on 2017/10/26 By Zhenyu Yang
 ================================== */
 
-
 #include <cmath>
 #include <iostream>
-#include "TrajectoryPlanning.h"
 
-
-
-void TrajectoryPlanning::init()
-{
-	r = 0;
-	xt = 0;
-	zt = 0;
-	d = 0;
-	resWidth = 0;
-}
-
-void TrajectoryPlanning::setCameraTransformation(float data[])
-{
-	xt = data[0];
-	zt =  data[2];
-}
-
-void TrajectoryPlanning::set3DPoints(float data[])
-{
-	x3d = (data[0]);
-	z3d = (data[2]);
-
-	x3d1 =(data[3]);
-	z3d1 =(data[5]);
-
-}
-
-
-void TrajectoryPlanning::set3DPoint1(float data[])
-{
-	x3d = data[0];
-	z3d = data[2];
-}
-
-void TrajectoryPlanning::set3DPoint2(float data[])
-{
-	x3d1 = data[0];
-	z3d1 = data[2];
-}
-
-void TrajectoryPlanning::setScreenWidth(float data)
-{
-	resWidth = data;
-}
-
-void TrajectoryPlanning::setFov(float data)
-{
-	fov = data;
-}
-
-void TrajectoryPlanning::setDistXTarget(float distS_target)
+class TrajectoryPlanning
 {
 
-	d = std::abs(distS_target);
-}
+	public:
 
-void TrajectoryPlanning::getWayPoint(float phi, float circle[], float *wayPoint)
-{
-	float red_x_3d = x3d;
-	float red_y_3d = z3d;
-	float blue_x_3d = x3d1;
-	float blue_y_3d = z3d1;
-	float w = resWidth;
-	float alpha = 2*atan((d/w)*tan(fov/2));
+		float r;
+		float xt;
+		float zt;
+		float d;
+		float resWidth;
+		float fov;
+		float x3d;
+		float z3d;
+		float x3d1;
+		float z3d1;
 
-	float distance = sqrt((red_x_3d-blue_x_3d)*(red_x_3d-blue_x_3d)+(red_y_3d-blue_y_3d)*(red_y_3d-blue_y_3d));
-	r = (distance/2)/sin(alpha);//radius
+	public:
 
-	
-	wayPoint[0] = r*cos(phi)+circle[0];
-	wayPoint[1] = r*sin(phi)+circle[1];	
+		void init();
+		void setCameraTransformation(float data[]);
+		void set3DPoints(float data[]);
+		void set3DPoint1(float data[]);
+		void set3DPoint2(float data[]);
+		void setScreenWidth(float data);
+		void setFov(float data);
+		void setDistXTarget(float distS_target);
+		void getWayPoint(float phi, float circle[], float *wayPoint);
+		void reset();
+};
 
-}
 
-void TrajectoryPlanning::reset()
-{
-	r = 0;
-	xt = 0;
-	zt = 0;
-	d = 0;
-	resWidth = 0;
-}
+#endif
