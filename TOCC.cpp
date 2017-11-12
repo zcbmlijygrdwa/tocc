@@ -113,7 +113,6 @@ void TOCC::spin(float *controlOutput)
 	//this function runs every frame to calculate the next transformation of the camera.
 	//assuming the roll, pitch and yt remains zeros. 
 	float yaw_control_output = pid_yaw.spin(xm);	
-	std::cout<<"yaw out = "<<yaw_control_output<<std::endl;
 	controlOutput[0] = yaw_control_output;
 
 	getCircle(r);
@@ -133,7 +132,6 @@ void TOCC::setCameraModel(float model[])
 {
 	fov = model[4];
 	resWidth = model[5];        	
-	std::cout<<"model[5] = "<<model[5]<<std::endl;	
 	tp.setScreenWidth(resWidth);
 	tp.setFov(fov);
 }
@@ -206,36 +204,6 @@ void TOCC::setControlTargets(float data[])
 
 
 void TOCC::getCircle(float r){
-	/*
-	   float red_x_3d = x3d;
-	   float red_y_3d = z3d;
-	   float blue_x_3d = x3d1;
-	   float blue_y_3d = z3d1;
-
-	//get the circle
-	float d = std::abs(distS_target);
-	float w = resWidth;
-	float alpha = 2*atan((d/w)*tan(fov/2));
-
-	float distance = sqrt((red_x_3d-blue_x_3d)*(red_x_3d-blue_x_3d)+(red_y_3d-blue_y_3d)*(red_y_3d-blue_y_3d));
-	float r = (distance/2)/sin(alpha);//radius
-
-	float h = (distance/2)/tan(alpha);
-	float beta = ((PI / 2 - atan ((blue_y_3d - red_y_3d) / (blue_x_3d - red_x_3d))));
-
-	float delta_x = h*cos(beta);
-	float delta_y = h*sin(beta);
-	float center_x = (blue_x_3d+red_x_3d)/2+delta_x;
-	float center_y = (red_y_3d+blue_y_3d)/2-delta_y;
-
-	circle [0] = center_x;
-	circle [1] = center_y;
-	circle [2] = r;
-	 */
-
-	//r =tp.getWayPoint();
-
-	//std::cout<<"RR = "<<r<<std::endl;
 	Point2D pp1;
 	Point2D pp2;
 	Point2D cam;

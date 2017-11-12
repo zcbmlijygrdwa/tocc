@@ -11,7 +11,6 @@
 
 int main()
 {
-	std::cout<<"hello"<<std::endl;
 
 
 	//inputs for camera model
@@ -93,6 +92,7 @@ int main()
 	//================================
 	//pinhole projection test
 
+	std::cout<<"--------- Pin Hole projection test -------"<<std::endl;
 	PinHole ph;
 	ph.setCameraModel(cameraModel);
 	ph.setCameraTransformation(cameraTransformation);
@@ -102,19 +102,18 @@ int main()
 	ph.compute();
 	float phOutput[4];
 	ph.getResults(phOutput);
-	//std::cout<<"x = 1, add1(x)  = "<<(add1(1))<<std::endl;
 
-	std::cout<<"------------------------------------------"<<std::endl;
+
 	std::cout<<"x2d1 = "<<phOutput[0]<<std::endl;
 	std::cout<<"y2d1 = "<<phOutput[1]<<std::endl;
 	std::cout<<"x2d2 = "<<phOutput[2]<<std::endl;
 	std::cout<<"y2d2 = "<<phOutput[3]<<std::endl;
-	std::cout<<"------------------------------------------"<<std::endl;
 
 
 
 
 
+	std::cout<<"--------- tocc test -------"<<std::endl;
 
 
 
@@ -157,6 +156,7 @@ cameraTransformation[4] = output[0];
 
 
 //================ Circle test
+	std::cout<<"--------- circle calculation test -------"<<std::endl;
 Point2D pp1;
 Point2D pp2;
 Point2D cam;
@@ -264,6 +264,7 @@ std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
 
 
 //test for MA filter
+	std::cout<<"--------- MA filter test -------"<<std::endl;
 MAFilter maf;
 maf.init();
 
