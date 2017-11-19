@@ -1,5 +1,5 @@
 
-// g++ -o test test.cpp TOCC.cpp basicController/PID.cpp filters/MAFilter.cpp cameraProjection/PinHole.cpp toric/Circle.cpp
+// g++ -o test test.cpp TOCC.cpp basicController/PID.cpp filters/MAFilter.cpp cameraProjection/PinHole.cpp toric/Circle.cpp trajectory/TrajectoryPlanning.cpp
 
 #include <iostream>
 #include <math.h>
@@ -8,6 +8,7 @@
 #include "toric/Circle.h"
 #include "struct/Point2D.h"
 #include "filters/MAFilter.h"
+#include "trajectory/TrajectoryPlanning.h"
 
 int main()
 {
@@ -267,6 +268,7 @@ std::cout<<"calculated center = ["<<out[0]<<", "<<out[1]<<"]"<<std::endl;
 	std::cout<<"--------- MA filter test -------"<<std::endl;
 MAFilter maf;
 maf.init();
+maf.setBufferSize(20);
 
 for(int i = 0;i<10;i++)
 {

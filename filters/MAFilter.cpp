@@ -16,6 +16,7 @@ Usage:
 
 Filter maf;
 maf.init();
+maf.setBufferSize(15);
 
 ......
 realTimeLoop
@@ -32,7 +33,7 @@ Created by Zhenyu Yang on 2017/10/25
 
 ==============================================*/
 #include "MAFilter.h"
-
+#include <iostream>
 void MAFilter::init()
 {
 	bufferedSize = 0;
@@ -75,6 +76,11 @@ float MAFilter::put(float dataIn)
 }
 
 
+void MAFilter::setBufferSize(int n)
+{
+	buffer = new float[n];
+	totalSize = n;
+}
 
 void MAFilter::getSum()
 {

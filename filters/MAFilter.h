@@ -16,7 +16,7 @@ Usage:
 
 Filter maf;
 maf.init();
-
+maf.setBufferSize(15);
 ......
 realTimeLoop
 {
@@ -38,7 +38,7 @@ class MAFilter
 {
 
 	public:
-		float buffer[10];
+		float* buffer;
 		int bufferedSize;
 		int totalSize;
 		bool ifBufferFull;
@@ -49,6 +49,7 @@ class MAFilter
 
 		void init();
 		float put(float dataIn);
+		void setBufferSize(int n);
 		void getSum();
 		void reset();
 };

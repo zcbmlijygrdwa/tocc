@@ -103,6 +103,18 @@ void TOCC::init()
 	maf_z3d.init();
 	maf_x3d2.init();
 	maf_z3d2.init();
+
+	
+	maf_xm.setBufferSize(10);
+	maf_distX.setBufferSize(10);
+	maf_distS.setBufferSize(10);
+
+	maf_xt.setBufferSize(10);
+	maf_zt.setBufferSize(10);
+	maf_x3d.setBufferSize(10);
+	maf_z3d.setBufferSize(10);
+	maf_x3d2.setBufferSize(10);
+	maf_z3d2.setBufferSize(10);
 	//trajectory planning initialization
 	tp.init();
 }
